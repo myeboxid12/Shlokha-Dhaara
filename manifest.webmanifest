@@ -1,0 +1,10 @@
+{
+  "name": "Shlokha Dhaara · Shloka Gurukul",
+  "short_name": "Shlokha Dhaara",
+  "description": "Learn, practise and memorise Sanskrit shlokas: a gurukul for children.",
+  "start_url": "./#/home",
+  "display": "standalone",
+  "background_color": "#fffaf0",
+  "theme_color": "#f59e0b",
+  "icons": [{ "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
