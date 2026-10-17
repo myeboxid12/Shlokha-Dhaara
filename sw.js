@@ -1,5 +1,5 @@
 // Offline support: keep the app shell cached, refresh it in the background.
-const CACHE = "shlokha-dhaara-v1";
+const CACHE = "shlokha-dhaara-v2";
 const SHELL = ["./", "index.html", "assets/styles.css", "assets/app.js", "data/shlokas.js", "assets/favicon.svg", "manifest.webmanifest"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL))); self.skipWaiting(); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))); self.clients.claim(); });

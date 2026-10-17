@@ -264,7 +264,7 @@
   function toastMsg(m) { const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(toastMsg.t); toastMsg.t = setTimeout(() => t.classList.remove("show"), 2600); }
   function celebrate() {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const box = $("#confetti"), cols = ["#f59e0b", "#e8590c", "#0ea5e9", "#16a34a", "#db2777", "#d69e14"];
+    const box = $("#confetti"), cols = ["#f59e0b", "#ea580c", "#fbbf24", "#9f1d20", "#f472b6", "#e0b44a"];   // marigold and rose petals
     for (let i = 0; i < 70; i++) {
       const p = document.createElement("i");
       p.style.left = Math.random() * 100 + "vw"; p.style.background = pick(cols);
@@ -316,7 +316,7 @@
     const t = LS.get("theme", matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     document.documentElement.dataset.theme = t;
     $("#theme-btn use").setAttribute("href", t === "dark" ? "#i-sun" : "#i-moon");
-    $("meta[name=theme-color]").content = t === "dark" ? "#0f1626" : "#f59e0b";
+    $("meta[name=theme-color]").content = t === "dark" ? "#3a0c0c" : "#6e1414";
   }
   $("#theme-btn").addEventListener("click", () => { LS.set("theme", document.documentElement.dataset.theme === "dark" ? "light" : "dark"); applyTheme(); });
 
@@ -356,28 +356,39 @@
   }
 
   /* ================= Hero illustration ================= */
-  const heroArt = `<svg class="hero-art" viewBox="0 0 520 430" role="img" aria-label="A temple gopuram at sunrise beside a lotus pond, with a peacock feather">
-    <defs><linearGradient id="hg-t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#e8590c"/></linearGradient>
-    <linearGradient id="hg-w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7dd3fc"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
-    <g transform="translate(395 105)"><g stroke="#f59e0b" stroke-width="6" stroke-linecap="round" opacity=".7">${Array.from({ length: 12 }, (_, i) => { const a = i * Math.PI / 6; return `<line x1="${Math.cos(a) * 66}" y1="${Math.sin(a) * 66}" x2="${Math.cos(a) * 84}" y2="${Math.sin(a) * 84}"/>`; }).join("")}</g>
-      <circle r="56" fill="#fbbf24"/><circle r="44" fill="#fcd34d"/><text y="20" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-size="58" font-weight="800" fill="#c2410c">ॐ</text></g>
-    <path d="M70 92q10-8 20 0q10-8 20 0M120 60q8-6 16 0q8-6 16 0" fill="none" stroke="#1f2a44" stroke-width="3" stroke-linecap="round" opacity=".45"/>
+  // Dawn behind a temple gopuram, framed by a carved arch with a marigold toran and temple bells
+  const garland = (x1, x2, y, sag, n) => Array.from({ length: n + 1 }, (_, i) => { const t = i / n, x = x1 + (x2 - x1) * t, yy = y + sag * 4 * t * (1 - t);
+    return i % 2 ? `<path d="M${x} ${yy}c-5 6-4 13 0 19c4-6 5-13 0-19Z" fill="#3f7a2b"/>` : `<circle cx="${x}" cy="${yy + 5}" r="7" fill="#f59e0b"/><circle cx="${x}" cy="${yy + 5}" r="4" fill="#ea580c"/>`; }).join("");
+  const bell = (x, y, len) => `<g><path d="M${x} ${y}v${len}" stroke="#9c6c0e" stroke-width="2"/><path d="M${x - 11} ${y + len + 22}c0-14 4-22 11-22s11 8 11 22Z" fill="#e0b44a" stroke="#9c6c0e" stroke-width="1.5"/><circle cx="${x}" cy="${y + len + 25}" r="3.5" fill="#9c6c0e"/></g>`;
+  const heroArt = `<svg class="hero-art" viewBox="0 0 520 440" role="img" aria-label="The sun rising behind a temple gopuram, framed by a carved arch with a marigold garland, temple bells, lotuses and peacock feathers">
+    <defs><linearGradient id="hg-t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2c14e"/><stop offset="1" stop-color="#c2410c"/></linearGradient>
+    <linearGradient id="hg-w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fb6c4"/><stop offset="1" stop-color="#0f6b7e"/></linearGradient>
+    <radialGradient id="hg-s"><stop offset="0" stop-color="#fff3c4"/><stop offset=".55" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></radialGradient></defs>
+    <g transform="translate(260 200)"><g stroke="#e0a100" stroke-width="5" stroke-linecap="round" opacity=".55">${Array.from({ length: 16 }, (_, i) => { const a = i * Math.PI / 8; return `<line x1="${Math.cos(a) * 98}" y1="${Math.sin(a) * 98}" x2="${Math.cos(a) * 124}" y2="${Math.sin(a) * 124}"/>`; }).join("")}</g>
+      <circle r="88" fill="url(#hg-s)"/></g>
+    <path d="M118 104q9-7 18 0q9-7 18 0M372 92q8-6 16 0q8-6 16 0" fill="none" stroke="#6e1414" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
     <g>
-      <rect x="168" y="318" width="184" height="58" rx="4" fill="url(#hg-t)"/>
-      <rect x="182" y="272" width="156" height="50" rx="4" fill="#f59e0b"/>
-      <rect x="196" y="232" width="128" height="44" rx="4" fill="#fbbf24"/>
-      <rect x="210" y="196" width="100" height="40" rx="4" fill="#f59e0b"/>
-      <rect x="224" y="164" width="72" height="36" rx="4" fill="#fbbf24"/>
-      <path d="M226 166c4-26 64-26 68 0Z" fill="#e8590c"/>
-      <path d="M260 120v22" stroke="#d69e14" stroke-width="4"/><circle cx="260" cy="118" r="6" fill="#d69e14"/>
-      <g fill="#c2410c" opacity=".55">${[[182, 286, 156], [196, 246, 128], [210, 208, 100], [224, 175, 72]].map(([x, y, w]) => Array.from({ length: Math.floor(w / 18) }, (_, i) => `<rect x="${x + 8 + i * 18}" y="${y}" width="8" height="14" rx="4"/>`).join("")).join("")}</g>
-      <path d="M238 376v-34a22 22 0 0 1 44 0v34Z" fill="#7c2d12"/>
-      <path d="M150 376h220" stroke="#c2410c" stroke-width="6" stroke-linecap="round"/>
+      <rect x="168" y="322" width="184" height="58" rx="3" fill="url(#hg-t)"/>
+      <rect x="182" y="276" width="156" height="50" rx="3" fill="#e0a100"/>
+      <rect x="196" y="236" width="128" height="44" rx="3" fill="#f2c14e"/>
+      <rect x="210" y="200" width="100" height="40" rx="3" fill="#e0a100"/>
+      <rect x="224" y="168" width="72" height="36" rx="3" fill="#f2c14e"/>
+      <path d="M226 170c4-26 64-26 68 0Z" fill="#9f1d20"/>
+      <path d="M260 124v22" stroke="#9c6c0e" stroke-width="4"/><circle cx="260" cy="122" r="6" fill="#9c6c0e"/>
+      <g fill="#9f1d20" opacity=".55">${[[182, 290, 156], [196, 250, 128], [210, 212, 100], [224, 179, 72]].map(([x, y, w]) => Array.from({ length: Math.floor(w / 18) }, (_, i) => `<rect x="${x + 8 + i * 18}" y="${y}" width="8" height="14" rx="4"/>`).join("")).join("")}</g>
+      <path d="M238 380v-34a22 22 0 0 1 44 0v34Z" fill="#5a1010"/>
+      <path d="M150 380h220" stroke="#6e1414" stroke-width="6" stroke-linecap="round"/>
     </g>
-    <ellipse cx="260" cy="402" rx="250" ry="26" fill="url(#hg-w)" opacity=".85"/>
-    ${[[96, 396, 1], [420, 400, .85], [330, 410, .6]].map(([x, y, s]) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0c-22 0-40-12-46-30 16-1 32 6 46 20 14-14 30-21 46-20C40-12 22 0 0 0Z" fill="#f9a8d4"/><path d="M0-8c-12-17-12-37 0-58 12 21 12 41 0 58Z" fill="#ec4899"/><path d="M-16-12c-9-11-11-26-7-40 10 6 17 16 19 27M16-12c9-11 11-26 7-40-10 6-17 16-19 27" fill="#f472b6"/></g>`).join("")}
-    <use href="#i-feather" x="22" y="150" width="64" height="200" transform="rotate(-14 54 250)"/>
-    <use href="#i-feather" x="440" y="190" width="48" height="160" transform="rotate(16 464 270)"/>
+    <ellipse cx="260" cy="408" rx="250" ry="24" fill="url(#hg-w)" opacity=".85"/>
+    ${[[110, 402, 1], [410, 404, .85], [330, 414, .6]].map(([x, y, s]) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0c-22 0-40-12-46-30 16-1 32 6 46 20 14-14 30-21 46-20C40-12 22 0 0 0Z" fill="#f9a8d4"/><path d="M0-8c-12-17-12-37 0-58 12 21 12 41 0 58Z" fill="#db2777"/><path d="M-16-12c-9-11-11-26-7-40 10 6 17 16 19 27M16-12c9-11 11-26 7-40-10 6-17 16-19 27" fill="#f472b6"/></g>`).join("")}
+    <path d="M30 432V178C30 84 140 22 260 22s230 62 230 156v254" fill="none" stroke="#6e1414" stroke-width="10"/>
+    <path d="M44 432V180C44 96 148 38 260 38s216 58 216 142v252" fill="none" stroke="#e0b44a" stroke-width="3"/>
+    <path d="M30 178C30 84 140 22 260 22s230 62 230 156" fill="none" stroke="#e0b44a" stroke-width="2" stroke-dasharray="2 9" stroke-linecap="round"/>
+    <path d="M70 92Q260 196 450 92" fill="none" stroke="#7a4a12" stroke-width="1.6"/>
+    ${garland(70, 450, 92, 52, 22)}
+    ${bell(70, 96, 40)}${bell(450, 96, 40)}
+    <use href="#i-feather" x="0" y="200" width="56" height="180" transform="rotate(-12 28 290)"/>
+    <use href="#i-feather" x="466" y="214" width="46" height="150" transform="rotate(12 489 289)"/>
   </svg>`;
 
   /* ================= Views ================= */
@@ -647,7 +658,7 @@
       <article class="worksheet">
         <div class="row" style="justify-content:space-between"><p class="eyebrow" style="margin:0">Shlokha Dhaara · Worksheet</p><p class="small" style="margin:0">Name: ____________________ &nbsp; Date: __________</p></div>
         <h1 style="margin-top:8px">${esc(s.title)}</h1><p class="small muted" style="margin:2px 0 0">${esc(s.src)}</p>
-        <div class="ws-box"><p lang="sa" style="font:600 1.5rem/1.7 var(--deva);margin:0">${s.dev.map(esc).join("<br>")}</p><p style="font-style:italic;margin:10px 0 0">${s.iast.map(esc).join("<br>")}</p></div>
+        <div class="ws-box"><p lang="sa" style="font:400 1.55rem/1.7 var(--deva);margin:0">${s.dev.map(esc).join("<br>")}</p><p style="font-style:italic;margin:10px 0 0">${s.iast.map(esc).join("<br>")}</p></div>
         <div class="ws-box"><b>What it means</b><p style="margin:4px 0 0">${esc(s.mean)}</p></div>
         <div class="ws-box"><b>Match each word to its meaning</b> (draw a line)<div class="ws-match" style="margin-top:8px"><div>${w.map((x, i) => `<span>${i + 1}. <i>${esc(x[0])}</i></span>`).join("")}</div><div>${mixed.map((m, i) => `<span>${"ABCDEF"[i]}. ${esc(m)}</span>`).join("")}</div></div></div>
         <div class="ws-box"><b>Write the shloka from memory</b><div class="ws-lines">${s.dev.map(() => "<div></div><div></div>").join("")}</div></div>
@@ -853,14 +864,14 @@
   };
   function certificate(l) {
     const cv = document.createElement("canvas"); cv.width = 1600; cv.height = 1130; const g = cv.getContext("2d");
-    g.fillStyle = "#fffaf0"; g.fillRect(0, 0, 1600, 1130);
-    g.strokeStyle = "#e8590c"; g.lineWidth = 18; g.strokeRect(40, 40, 1520, 1050);
+    g.fillStyle = "#fbf3e2"; g.fillRect(0, 0, 1600, 1130);
+    g.strokeStyle = "#6e1414"; g.lineWidth = 18; g.strokeRect(40, 40, 1520, 1050);
     g.strokeStyle = "#d69e14"; g.lineWidth = 4; g.strokeRect(78, 78, 1444, 974);
-    for (let x = 120; x < 1490; x += 46) { g.fillStyle = x % 92 ? "#f59e0b" : "#0ea5e9"; g.beginPath(); g.arc(x, 112, 7, 0, 7); g.fill(); g.beginPath(); g.arc(x, 1018, 7, 0, 7); g.fill(); }
-    g.textAlign = "center"; g.fillStyle = "#c2410c"; g.font = "800 92px 'Baloo 2', sans-serif"; g.fillText("ॐ", 800, 250);
-    g.fillStyle = "#1f2a44"; g.font = "800 76px 'Baloo 2', Georgia, serif"; g.fillText("Certificate of Learning", 800, 360);
+    for (let x = 120; x < 1490; x += 46) { g.fillStyle = x % 92 ? "#e09a1a" : "#9f1d20"; g.beginPath(); g.arc(x, 112, 7, 0, 7); g.fill(); g.beginPath(); g.arc(x, 1018, 7, 0, 7); g.fill(); }
+    g.textAlign = "center"; g.fillStyle = "#c2410c"; g.font = "92px 'Tiro Devanagari Sanskrit', serif"; g.fillText("ॐ", 800, 250);
+    g.fillStyle = "#3b1f12"; g.font = "76px 'Tiro Devanagari Sanskrit', Georgia, serif"; g.fillText("Certificate of Learning", 800, 360);
     g.font = "600 34px Nunito, sans-serif"; g.fillStyle = "#55607a"; g.fillText("This is proudly presented to", 800, 440);
-    g.font = "800 96px 'Baloo 2', Georgia, serif"; g.fillStyle = "#e8590c"; g.fillText(l.guest ? "A Shining Learner" : l.name, 800, 560);
+    g.font = "96px 'Tiro Devanagari Sanskrit', Georgia, serif"; g.fillStyle = "#9f1d20"; g.fillText(l.guest ? "A Shining Learner" : l.name, 800, 560);
     const n = learnedCount(l);
     g.font = "600 36px Nunito, sans-serif"; g.fillStyle = "#1f2a44"; g.fillText(`for learning ${n} shloka${n === 1 ? "" : "s"} by heart at Shlokha Dhaara`, 800, 640);
     const names = Object.keys(l.learned).map(id => byId[id].title.normalize("NFC"));
@@ -873,7 +884,7 @@
     g.fillText(new Date().toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" }), 420, 930);
     g.fillText("Parent / Teacher", 1180, 930);
     g.strokeStyle = "#c9d2e3"; g.lineWidth = 3; g.beginPath(); g.moveTo(260, 890); g.lineTo(580, 890); g.moveTo(1020, 890); g.lineTo(1340, 890); g.stroke();
-    g.font = "700 30px 'Baloo 2', sans-serif"; g.fillStyle = "#d69e14"; g.fillText("सर्वे भवन्तु सुखिनः", 800, 980);
+    g.font = "34px 'Tiro Devanagari Sanskrit', serif"; g.fillStyle = "#d69e14"; g.fillText("सर्वे भवन्तु सुखिनः", 800, 980);
     const a = document.createElement("a"); a.download = `Shlokha-Dhaara-certificate-${(l.name || "learner").replace(/\W+/g, "-")}.png`; a.href = cv.toDataURL("image/png"); a.click();
     celebrate(); toastMsg("Certificate downloaded 🏅");
   }

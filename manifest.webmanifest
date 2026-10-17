@@ -4,7 +4,7 @@
   "description": "Learn, practise and memorise Sanskrit shlokas: a gurukul for children.",
   "start_url": "./#/home",
   "display": "standalone",
-  "background_color": "#fffaf0",
-  "theme_color": "#f59e0b",
+  "background_color": "#fbf3e2",
+  "theme_color": "#6e1414",
   "icons": [{ "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
 }
